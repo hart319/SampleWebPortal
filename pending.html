@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>Pending Page ProtectU</title>
+    <link rel="stylesheet" href="form.css"> 
+</head>
+<body>
+  <div><h1>Pending Page</h1></div>
+  <div>
+    <p>Your request is being processed. Please wait...</p>
+  </div>
+  <script>
+    // make an AJAX GET request to your backend API endpoint to check the status of the request
+    setInterval(() => {
+      fetch('/your-backend-endpoint', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json(); // parse the response body as a JSON object
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then(data => {
+        if (data.accessGranted) {
+          window.location.replace('/detail.html'); // redirect to the detail.html page if access is granted
+        }
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }, 5000); // check the status every 5 seconds
+  </script>
+</body>
+</html>
